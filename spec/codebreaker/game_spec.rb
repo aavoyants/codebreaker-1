@@ -21,11 +21,11 @@ describe "#ptomtp" do
     end
     
     context "when press h " do
-          it "should returt The first number is:" do
-            output.should_receive(:puts).with('The first number is:')
-            game.stub(:gets).and_return("h")
-            game.prompt
-        end
+            it 'puts You have won the game' do
+            game.stub(:gets).and_return('The first number')
+            output.should_receive(:puts).with(/The first number is:/)
+            game.gets('h')
+          end
     end
     
     context "when win" do

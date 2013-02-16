@@ -2,6 +2,7 @@
 
 module Codebreaker
 class Game
+  @@coutn = 1
     def initialize(output = STDOUT)
         @output = output
     end
@@ -21,9 +22,13 @@ class Game
             hint
             when 'q'
             exit
+            when 'y'
+            @@coutn = 0
+            guess(answer)
             else
             guess(answer)
         end
+        @@coutn += 1
         prompt unless answer.nil? or answer == ""
     end
     
@@ -34,9 +39,9 @@ class Game
     def guess(guess)
         marker = Marker.new(@secret, guess)
         if marker.exact_match_count != 4
-            @output.puts '+'*marker.exact_match_count + '-'*marker.number_match_count
+            @output.puts "Guess number #{@@coutn} \n" + '+'*marker.exact_match_count + '-'*marker.number_match_count
             else
-            @output.puts "YOU WIN THE GAME \n Just keep playing or type q & ENTER to quit"
+            @output.puts "YOU WIN THE GAME by #{@@coutn} guess \n To play again type y and ENTER to quit type q & ENTER"
             @secret = generate_code
         end
     end
@@ -80,4 +85,4 @@ class Marker
     end
 end
 end
-Codebreaker::Game.new.start
+#Codebreaker::Game.new.start
