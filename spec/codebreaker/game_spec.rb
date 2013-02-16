@@ -21,19 +21,23 @@ describe "#ptomtp" do
     end
     
     context "when press h " do
-          pending "fuck"
+          it "should returt The first number is:" do
+            output.should_receive(:puts).with('The first number is:')
+            game.stub(:gets).and_return("h")
+            game.prompt
+        end
     end
     
     context "when win" do
-            pending "make congratulations"
+      xit "make congratulations"
     end
     
     context "when y - play again " do
-        pending "make y in play again"
+        xit "make y in play again"
     end
     
     context "when n - must be quit" do
-        pending "make quit for n"
+        xit "make quit for n"
     end
 end
 

@@ -1,4 +1,4 @@
-#require 'codebreaker/version'
+#require_relative 'codebreaker/version'
 
 module Codebreaker
 class Game
@@ -80,4 +80,4 @@ class Marker
     end
 end
 end
-#Codebreaker::Game.new.start
+Codebreaker::Game.new.start
