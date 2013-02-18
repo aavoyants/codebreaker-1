@@ -20,24 +20,38 @@ describe "#ptomtp" do
         game.start
     end
     
-    context "when press h " do
-            it 'puts You have won the game' do
-            game.stub(:gets).and_return('The first number')
-            output.should_receive(:puts).with(/The first number is:/)
-            game.gets('h')
+    context "promtp for the Guess number" do
+            it 'puts Guess number n ' do
+            output.should_receive(:puts).with(/Guess number \d\ /)
+            game.stub(:gets).and_return("")
+            game.start
           end
     end
     
-    context "when win" do
-      xit "make congratulations"
+    context "when with h" do
+      it "puts The first number" do
+            output.should_receive(:puts).with(/The first number is:\d*\ / )
+            game.stub(:gets).and_return("h")
+            game.start
+      end
     end
     
+    context "puts You have won the game..." do
+      it "make congratulations" do
+            output.should_receive(:puts).with(/The first number is:\d*\ / )
+            game.stub(:gets).and_return("h")
+            game.start
+          end
+    end
+
     context "when y - play again " do
         xit "make y in play again"
+
     end
     
     context "when n - must be quit" do
         xit "make quit for n"
+
     end
 end
 
@@ -66,7 +80,7 @@ describe Marker do
     end
     describe "#number match coutn" do
         context "with 1 extra match duplicated in guess" do
-                marker = Marker.new('1234', '1155')
+                marker = Marker.new('1234', '1166')
                 specify {marker.number_match_count.should == 0}
         end
         
@@ -79,11 +93,11 @@ describe Marker do
                 specify {marker.number_match_count.should == 1}
         end
         context "with 1 exact match do" do
-                marker = Marker.new('1234', '1555')
+                marker = Marker.new('1234', '1666')
                 specify {marker.number_match_count.should == 0}
         end
         context "with 1 extra match and 1 number march" do
-                marker = Marker.new('1234', '1525')
+                marker = Marker.new('1234', '1626')
                 specify {marker.number_match_count.should == 1}
         end
     end

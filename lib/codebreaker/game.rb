@@ -29,7 +29,7 @@ class Game
             guess(answer)
         end
         @@coutn += 1
-        prompt unless answer.nil? or answer == ""
+        prompt unless answer.nil? or answer == "" or 'h' or 'y'
     end
     
     def hint
