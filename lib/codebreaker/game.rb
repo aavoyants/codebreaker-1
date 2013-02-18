@@ -17,21 +17,32 @@ class Game
     def prompt
         @output.puts 'Enter guess:'
         answer = gets.chomp
-        case answer
-            when 'h'
-            hint
-            when 'q'
-            exit
-            when 'y'
-            @@coutn = 0
-            guess(answer)
-            else
-            guess(answer)
+        if @@coutn < 30
+          case answer
+              when 'h'
+              hint
+              when 'q'
+              @output.puts "By-by"
+              exit
+              when 'y'
+              @@coutn = 0
+              guess(answer)
+              else
+              guess(answer)
+          end
+        else
+          @@coutn = 0
+          end_of_game
         end
         @@coutn += 1
-        prompt unless answer.nil? or answer == "" or 'h' or 'y'
+        prompt unless answer.nil? or answer == "" or answer == 'h' or answer == 'y' or answer == 'q'
     end
     
+    def end_of_game
+      @output.puts "The number was: #{@secret}, you loos!\n To play again type y and ENTER to quit type q & ENTER"
+      @secret = generate_code
+    end
+
     def hint
         @output.puts "The first number is: #{@secret}"
     end

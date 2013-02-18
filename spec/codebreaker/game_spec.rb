@@ -36,23 +36,37 @@ describe "#ptomtp" do
       end
     end
     
-    context "puts You have won the game..." do
-      it "make congratulations" do
+    context "when y - play again " do
+        it "Game guess 0" do
+            output.should_receive(:puts).with(/Guess number 0 /)
+            game.stub(:gets).and_return("y")
+            game.start
+        end
+
+    end
+
+    context "when q - must quit" do
+        it "should have SystemExit" do
+            output.should_receive(:puts).with(/By-by/)
+            game.stub(:gets).and_return("q")
+            game.start
+        end
+    end
+
+     context "puts You have won the game..." do
+      xit "make congratulations" do
             output.should_receive(:puts).with(/The first number is:\d*\ / )
             game.stub(:gets).and_return("h")
             game.start
           end
-    end
+    end   
 
-    context "when y - play again " do
-        xit "make y in play again"
-
-    end
-    
-    context "when n - must be quit" do
+    context "more then 30 guesses - you loos" do
         xit "make quit for n"
 
     end
+    
+
 end
 
 describe Marker do
