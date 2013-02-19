@@ -46,8 +46,8 @@ describe "#ptomtp" do
     end
 
     context "when q - must quit" do
-        it "should have SystemExit" do
-            output.should_receive(:puts).with(/By-by/)
+        it "should exit" do
+            output.should raise_error SystemExit
             game.stub(:gets).and_return("q")
             game.start
         end
@@ -55,8 +55,8 @@ describe "#ptomtp" do
 
      context "puts You have won the game..." do
       xit "make congratulations" do
-            output.should_receive(:puts).with(/The first number is:\d*\ / )
-            game.stub(:gets).and_return("h")
+            output.should_receive(:puts).with(/YOU WIN THE GAME by / )
+            game.stub(:gets).and_return("")
             game.start
           end
     end   

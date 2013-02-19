@@ -35,11 +35,11 @@ class Game
           end_of_game
         end
         @@coutn += 1
-        prompt unless answer.nil? or answer == "" or answer == 'h' or answer == 'y' or answer == 'q'
+        prompt# unless answer.nil? or answer == "" or answer == 'h' or answer == 'y' or answer == 'q'
     end
     
     def end_of_game
-      @output.puts "The number was: #{@secret}, you loos!\n To play again type y and ENTER to quit type q & ENTER"
+      @output.puts "The secret code was: #{@secret}, you loos!\n To play again type y and ENTER to quit type q & ENTER"
       @secret = generate_code
     end
 
@@ -52,11 +52,17 @@ class Game
         if marker.exact_match_count != 4
             @output.puts "Guess number #{@@coutn} \n" + '+'*marker.exact_match_count + '-'*marker.number_match_count
             else
-            @output.puts "YOU WIN THE GAME by #{@@coutn} guess \n To play again type y and ENTER to quit type q & ENTER"
+            @output.puts "Type your name:"
             @secret = generate_code
+            writename
         end
     end
     
+    def writename
+      answer = gets.chomp
+      @output.puts "Sencks for the game #{answer}, you win by #{@@coutn} guesses\n To play again type y and ENTER to quit type q & ENTER "
+      #somethig to output, then guess again... chenge the win mess
+    end
     private
     def generate_code
         @code = Array('1'..'6').sample(4).join
