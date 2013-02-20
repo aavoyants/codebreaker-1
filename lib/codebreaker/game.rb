@@ -15,7 +15,6 @@ class Game
     
     def prompt
       @output.puts "Enter guess:"
-      #answer = gets.chomp
       while @@coutn < 30 do
         answer = gets.chomp
         case answer
@@ -31,7 +30,7 @@ class Game
           end
         @@coutn += 1
       end
-
+      @output.puts "By-by loooser!"
     end
 
     def end_of_game
@@ -98,4 +97,4 @@ class Game
     end
 end
 end
-#Codebreaker::Game.new.start
+Codebreaker::Game.new.start
