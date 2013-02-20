@@ -17,7 +17,6 @@ module Codebreaker
     it "prompts for the first guess" do
       output.should_receive(:puts).with('Enter guess:')
       game.stub(:gets).and_return("")
-      @@count = 1
       game.start
     end
 
@@ -31,6 +30,7 @@ module Codebreaker
 
     context "when with h" do
       it "puts The first number" do
+        @@count = 1
         output.should_receive(:puts).with(/The first number is:\d*\ / )
         game.stub(:gets).and_return("h")
         game.start
@@ -39,7 +39,8 @@ module Codebreaker
 
     context "when y - play again " do
       it "Game guess 0" do
-        output.should_receive(:puts).with(/Guess number 0 /)
+        @@count = 1
+        STDOUT.should_receive(:puts).with(/Guess number 0 /)
         game.stub(:gets).and_return("y")
         game.start
       end

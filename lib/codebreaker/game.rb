@@ -97,4 +97,4 @@ class Game
     end
 end
 end
-Codebreaker::Game.new.start
+#Codebreaker::Game.new.start
