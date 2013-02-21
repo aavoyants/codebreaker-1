@@ -2,7 +2,7 @@
 
 module Codebreaker
 class Game
-    @@coutn = 1
+    @@count = 0
     def initialize(output = STDOUT)
       @output = output
     end
@@ -15,7 +15,7 @@ class Game
     
     def prompt
       @output.puts "Enter guess:"
-      while @@coutn < 30 do
+      while @@count < 30 do
         answer = gets.chomp
         case answer
           when 'h'
@@ -23,29 +23,24 @@ class Game
           when 'q'
             exit
           when 'y'
+            @@count = 0
             guess(answer)
-            @@coutn = 0
             else
             guess(answer)
           end
-        @@coutn += 1
+        @@count += 1
       end
       @output.puts "By-by loooser!"
     end
 
-    def end_of_game
-      @output.puts "The secret code was: #{@secret}, you loos!\n To play again type y and ENTER to quit type q & ENTER"
-      @secret = generate_code
-    end
-
     def hint
-      @output.puts "The first number is: #{@secret}"
+      @output.puts "The first number is: #{@secret}"#change to @secret[1]
     end
 
     def guess(guess)
       marker = Marker.new(@secret, guess)
       if marker.exact_match_count != 4
-        @output.puts "Guess number #{@@coutn} \n" + '+'*marker.exact_match_count + '-'*marker.number_match_count
+        @output.puts "Guess number #{@@count} \n" + '+'*marker.exact_match_count + '-'*marker.number_match_count
       else
         @output.puts "Type your name:"
         @secret = generate_code
@@ -55,8 +50,10 @@ class Game
 
     def writename
       answer = gets.chomp
-      @output.puts "Sencks for the game #{answer}, you win by #{@@coutn} guesses\n To play again type y and ENTER to quit type q & ENTER "
-      #somethig to output, then guess again... chenge the win mess
+      @output.puts "Sencks for the game #{answer}, you win by #{@@count} guesses\n To play again type y and ENTER to quit type q & ENTER "
+      File.new('score.txt', 'w+') unless File.exists?('score.txt')
+      @inf = "#{answer} - #{@@count} "
+      File.open("score.txt", 'a'){|f| f.write @inf}
     end
     private
     def generate_code

@@ -22,7 +22,7 @@ module Codebreaker
 
     context "promtp for the Guess number" do
       it 'puts Guess number n ' do
-        output.should_receive(:puts).with(/Guess number \d\ /)
+        output.should_include(/Guess number \d\ /)
         game.stub(:gets).and_return("")
         game.start
       end
@@ -30,8 +30,7 @@ module Codebreaker
 
     context "when with h" do
       it "puts The first number" do
-        @@count = 1
-        output.should_receive(:puts).with(/The first number is:\d*\ / )
+        output.should_include(/The first number is:\d*\ / )
         game.stub(:gets).and_return("h")
         game.start
       end
@@ -39,37 +38,52 @@ module Codebreaker
 
     context "when y - play again " do
       it "Game guess 0" do
-        @@count = 1
-        STDOUT.should_receive(:puts).with(/Guess number 0 /)
+        output.should_include(/Guess number 0 /)
         game.stub(:gets).and_return("y")
         game.start
       end
     end
 
     context "when q - must quit" do
-      xit "should exit" do
-        output.should raise_error SystemExit
+      it "should exit" do
+        output.should_include(/By-by /)
         game.stub(:gets).and_return("q")
         game.start
       end
     end
 
     context "puts You have won the game..." do
-      xit "make congratulations" do
-        output.should_receive(:puts).with(/YOU WIN THE GAME by / )
-        game.stub(:gets).and_return("")
+      it "make congratulations" do
+        output.should_include(/Type your name: / )
+        marker = Marker.new('1234', '1234')
         game.start
       end
     end
 
     context "more then 30 guesses - you loos" do
-      xit "make quit for n"
-
+      it "show By-by" do
+        output.should_include(/By-by loooser! /)
+        @@count = 29
+        game.stub(:gets).and_return(1234)
+        game.start
       end
     end
+    
+    context "#writename" do
+      it "shoud change the file" do
+        file = mock('score.txt')
+        File.should_receive(:open).with("score.txt", 'a').and_yield(file)
+        file.should_resive(:write).with(@inf)
+        writename
+    end
+  end
+    end
+    #end of prompt
+  end
+    #end of class
 
   describe Marker do
-    describe "#exact_match_coutn" do
+    describe "#exact_match_count" do
       context "with no matches" do
         marker = Marker.new('1234', '6666')
         specify {marker.exact_match_count.should == 0}
@@ -90,7 +104,7 @@ module Codebreaker
         specify {marker.exact_match_count.should == 1}
         end
       end
-      describe "#number match coutn" do
+      describe "#number match count" do
         context "with 1 extra match duplicated in guess" do
         marker = Marker.new('1234', '1166')
         specify {marker.number_match_count.should == 0}
@@ -114,5 +128,4 @@ module Codebreaker
       end
     end
   end
-end
 end
